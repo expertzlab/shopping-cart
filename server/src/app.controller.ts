@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Product } from './product';
+import { User } from './user';
 
 @Controller()
 export class AppController {
@@ -11,8 +11,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('products')
-  products(@Body() product: Product){
-    console.log('Received:' + JSON.stringify(product) ) 
+  @Post('api/users')
+  products(@Body() user: User){
+    console.log('Received:' + JSON.stringify(user) ) 
   }
 }
