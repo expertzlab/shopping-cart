@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shopping-cart';
+
+
+  email:string = ''
+  password:string = ''
+  secret:string = ''
+
+  constructor() {}
+
+  onClickSubmit(form:NgForm){
+    console.log("submitted")
+    console.log(form)
+  }
+
 }
