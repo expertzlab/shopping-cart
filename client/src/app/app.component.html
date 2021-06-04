@@ -1,29 +1,39 @@
 
 <div class="body">
   <p>Login:</p>
-
-  <form #userlogin="ngForm" (ngSubmit)="onClickSubmit(userlogin)">
-    <div class="form-group">
-      <label class="form-label" for="email">
+<div class="container">
+  <form #userlogin="ngForm" (ngSubmit)="onClickSubmit()" class="row">
+    <div class="form-group row">
+      <label class="form-label col-sm-4 col-md-4" for="email">
         Email as Login:
       </label>
-      <input name="email" id="email" classes="form-control" type="text">
+      <div class="col-sm-4 col-md-4">
+          <input name="email" id="email" [ngModel]="defaultEmail" #e="ngModel" classes="form-control" type="text" required email ngModel>
+      </div>
     </div>
-    <div class="form-group">
-      <label class="form-label" for="password">
+    <div class="alert alert-danger" *ngIf="!e.valid">Enter a valid Email.</div>
+
+    <div class="form-group row">
+      <label class="form-label col-sm-4 col-md-4" for="password">
         Password:
       </label>
-      <input classes="form-control" name="password" id="password" type="password">
+      <div class="col-sm-4 col-md-4">
+      <input class="form-control" name="password" id="password" type="password" required ngModel>
+      </div>
     </div>
-    <div class="form-group">
-      <label for="secretQuestion">Select One of the Secret Question you Know:</label>
-      <select name="secret" id="secretQuestion">
+    <div class="form-group row">
+      <label class="col-sm-4 col-md-4" for="secretQuestion">Select One of the Secret Question you Know:</label>
+      <select class="col-sm-4 col-md-4" name="secret" id="secretQuestion" ngModel required>
         <option value="pet">What is the name your pet:</option>
         <option value="teacher">Who is your favorite Teacher?</option>
       </select>
     </div>
-    <input type="submit" value="submit">
+    <div class="row">
+      <input class="btn btn-outline-primary col-md-3 col-sm-3" type="submit" value="submit" [disabled]="!userlogin.valid">
+    </div>
+    
   </form>
+</div>
 </div>
 
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,9 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent {
   title = 'shopping-cart';
+  @ViewChild('userlogin') sform!: NgForm;
 
+  defaultEmail:string = "s@s.com"
 
   email:string = ''
   password:string = ''
@@ -16,9 +18,11 @@ export class AppComponent {
 
   constructor() {}
 
-  onClickSubmit(form:NgForm){
+  onClickSubmit(){
     console.log("submitted")
-    console.log(form)
+    
+    console.log(this.sform)
+    console.log("received"+ JSON.stringify(this.sform.value) )
   }
 
 }
