@@ -35,6 +35,27 @@
     </div>
 
     <div class="form-group row">
+      <label class="form-label col-sm-4 col-md-4" for="phone">
+        Phone as Login:
+      </label>
+      <div class="col-sm-4 col-md-4">
+          <input name="email" formControlName="phone" id="phone" classes="form-control" type="text">
+      </div>
+    </div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls.phone.valid && signupForm.controls.phone.touched">
+      <div *ngIf="signupForm.controls.phone.errors?.required">
+        {{validationMessages.email.required}} 
+       </div>
+      <div *ngIf="signupForm.controls.phone.errors?.minlength">
+        {{validationMessages.email.minlength}}
+      </div>
+      <div *ngIf="signupForm.controls.phone.errors?.phone">
+        {{validationMessages.email.email}} 
+       </div>
+
+    </div>
+
+    <div class="form-group row">
       <label class="form-label col-sm-4 col-md-4"  for="age">Age: </label>
       <div class="col-sm-4 col-md-4">
         <input class="form-control" formControlName="age" id="age" type="input">

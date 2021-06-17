@@ -40,12 +40,12 @@ export class AppComponent implements OnInit {
     }
 
     let ageCtrl = new FormControl(null, [Validators.required, Validators.min(18), Validators.max(65)])
-     let loginOp = new FormControl(null)
+    let loginOp = new FormControl(null)
+    let phoneCtrl = new FormControl(null)
      
     this.signupForm = new FormGroup({
-      'email': new FormControl(null,[ 
-        Validators.required, Validators.email, Validators.minLength(10)
-      ]),
+      'email': new FormControl(null),
+      'phone': new FormControl(null),
       password : passWordCtrl,
       age: ageCtrl,
       'loginOp': loginOp,
