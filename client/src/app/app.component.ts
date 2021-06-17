@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +23,11 @@ export class AppComponent implements OnInit {
       required: 'Email Required',
       minlength: 'Email minimum length required',
       email: 'Email format is not correct'
+    }
+    this.validationMessages.phone = {
+      required: 'Phone Required',
+      minlength: 'Phone should have 10 digits',
+      phone: 'Phone format is not correct'
     }
     this.validationMessages.password = {
       required: 'Password Required',
@@ -54,6 +59,7 @@ export class AppComponent implements OnInit {
 
     this.signupForm.valueChanges.subscribe((data) => {
       console.log('data: ', data)
+      console.log('p: ',JSON.stringify(this.signupForm.controls.phone.errors))
     })
     
   }
@@ -81,9 +87,24 @@ export class AppComponent implements OnInit {
   loopTroughControls(group: FormGroup){
     Object.keys(group.controls).forEach((key) => {
       let ctrl:any = group.get(key)
-      ctrl.disable()
+      //ctrl.disable()
       console.log('key: ', key, 'value:', ctrl.value )
     })
+  }
+
+  onclickOption(ctrlName: string){
+    
+    let  ctrlEmail = this.signupForm.controls.email
+    let  ctrlPhone = this.signupForm.controls.phone
+    if(ctrlName == 'email'){
+      ctrlEmail.setValidators([Validators.email, Validators.required])
+      ctrlPhone.setValidators([])
+    } else {
+      ctrlPhone.setValidators([Validators.pattern('.*\\d'), Validators.required, Validators.minLength(10)])
+      ctrlEmail.setValidators([])
+    }
+    ctrlEmail.updateValueAndValidity()
+    ctrlPhone.updateValueAndValidity
   }
 
 }

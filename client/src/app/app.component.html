@@ -9,11 +9,11 @@
         Select Login options:
       </label>
       <div *ngFor="let optNames of loginOptions">
-        <input type="radio" formControlName="loginOp" name="loginOp" [value]="optNames"> {{optNames}}
+        <input (click)="onclickOption(optNames)" type="radio" formControlName="loginOp" name="loginOp" [value]="optNames"> {{optNames}}
       </div>
     </div>
 
-    <div class="form-group row">
+    <div *ngIf="signupForm.controls.loginOp.value == 'email'" class="form-group row">
       <label class="form-label col-sm-4 col-md-4" for="email">
         Email as Login:
       </label>
@@ -34,7 +34,7 @@
 
     </div>
 
-    <div class="form-group row">
+    <div *ngIf="signupForm.controls.loginOp.value == 'phone'" class="form-group row">
       <label class="form-label col-sm-4 col-md-4" for="phone">
         Phone as Login:
       </label>
@@ -44,13 +44,13 @@
     </div>
     <div class="alert alert-danger" *ngIf="!signupForm.controls.phone.valid && signupForm.controls.phone.touched">
       <div *ngIf="signupForm.controls.phone.errors?.required">
-        {{validationMessages.email.required}} 
+        {{validationMessages.phone.required}} 
        </div>
       <div *ngIf="signupForm.controls.phone.errors?.minlength">
-        {{validationMessages.email.minlength}}
+        {{validationMessages.phone.minlength}}
       </div>
-      <div *ngIf="signupForm.controls.phone.errors?.phone">
-        {{validationMessages.email.email}} 
+      <div *ngIf="signupForm.controls.phone.errors?.pattern">
+        {{validationMessages.phone.phone}} 
        </div>
 
     </div>
