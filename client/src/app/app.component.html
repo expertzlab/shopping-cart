@@ -2,34 +2,67 @@
 <div class="body">
   <p>Login:</p>
 <div class="container">
-  <form #userlogin="ngForm" (ngSubmit)="onClickSubmit()" class="row">
+  <form [formGroup]="signupForm" (ngSubmit)="onClickSubmit()" class="row">
+    
+    <div class="form-group row">
+      <label class="form-label col-sm-4 col-md-4" for="email">
+        Select Login options:
+      </label>
+      <div *ngFor="let optNames of loginOptions">
+        <input type="radio" formControlName="loginOp" name="loginOp" [value]="optNames"> {{optNames}}
+      </div>
+    </div>
+
     <div class="form-group row">
       <label class="form-label col-sm-4 col-md-4" for="email">
         Email as Login:
       </label>
       <div class="col-sm-4 col-md-4">
-          <input name="email" id="email" [ngModel]="defaultEmail" #e="ngModel" classes="form-control" type="text" required email ngModel>
+          <input name="email" formControlName="email" id="email" classes="form-control" type="text">
       </div>
     </div>
-    <div class="alert alert-danger" *ngIf="!e.valid">Enter a valid Email.</div>
+    <div class="alert alert-danger" *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.touched">
+      <div *ngIf="signupForm.controls.email.errors?.required">
+        {{validationMessages.email.required}} 
+       </div>
+      <div *ngIf="signupForm.controls.email.errors?.minlength">
+        {{validationMessages.email.minlength}}
+      </div>
+      <div *ngIf="signupForm.controls.email.errors?.email">
+        {{validationMessages.email.email}} 
+       </div>
+
+    </div>
+
+    <div class="form-group row">
+      <label class="form-label col-sm-4 col-md-4"  for="age">Age: </label>
+      <div class="col-sm-4 col-md-4">
+        <input class="form-control" formControlName="age" id="age" type="input">
+      </div>
+      <div class="alert alert-danger" *ngIf="!signupForm.controls.age.valid && signupForm.controls.age.touched">
+        Age should be between 18 and 65
+      </div>
+    </div>
 
     <div class="form-group row">
       <label class="form-label col-sm-4 col-md-4" for="password">
         Password:
       </label>
       <div class="col-sm-4 col-md-4">
-      <input class="form-control" name="password" id="password" type="password" required ngModel>
+      <input class="form-control" formControlName="password" name="password" id="password" type="input">
       </div>
+      <div class="alert alert-danger" *ngIf="!signupForm.controls.password.valid">Enter a valid Password,
+        at lest a two digit number and small characters.</div>
     </div>
     <div class="form-group row">
       <label class="col-sm-4 col-md-4" for="secretQuestion">Select One of the Secret Question you Know:</label>
-      <select class="col-sm-4 col-md-4" name="secret" id="secretQuestion" ngModel required>
+      <select class="col-sm-4 col-md-4" formControlName="secret" name="secret" id="secretQuestion">
         <option value="pet">What is the name your pet:</option>
         <option value="teacher">Who is your favorite Teacher?</option>
       </select>
     </div>
     <div class="row">
-      <input class="btn btn-outline-primary col-md-3 col-sm-3" type="submit" value="submit" [disabled]="!userlogin.valid">
+      <input class="btn btn-outline-primary col-md-3 col-sm-3" type="submit" value="submit" [disabled]="! signupForm.valid">
     </div>
     
   </form>
