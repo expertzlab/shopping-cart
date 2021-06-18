@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -47,16 +47,23 @@ export class AppComponent implements OnInit {
     let ageCtrl = new FormControl(null, [Validators.required, Validators.min(18), Validators.max(65)])
     let loginOp = new FormControl(null)
     let phoneCtrl = new FormControl(null)
-     
+    
+    let multifactor = new FormGroup({
+      'otp': new FormControl(null, Validators.required)
+    })
+
     this.signupForm = new FormGroup({
       'email': new FormControl(null),
       'phone': new FormControl(null),
       password : passWordCtrl,
       age: ageCtrl,
       'loginOp': loginOp,
-      'secret': new FormControl('pet')
+      'secret': new FormControl('pet'),
+      'multifactor': multifactor,
+      'hobbies': new FormArray([])
     })
 
+    this.onloaddata()
     this.signupForm.valueChanges.subscribe((data) => {
       console.log('data: ', data)
       console.log('p: ',JSON.stringify(this.signupForm.controls.phone.errors))
@@ -105,6 +112,28 @@ export class AppComponent implements OnInit {
     }
     ctrlEmail.updateValueAndValidity()
     ctrlPhone.updateValueAndValidity
+  }
+
+  onloaddata(){
+
+    this.signupForm.patchValue({
+      'email': 's@s.com',
+      'phone' : '2323232323',
+      'age':34,
+      'loginOp':'email',
+      'secret':'pet',
+      'multifactor':{'otp':'2222'}
+    })
+  }
+
+  onAddHobby(){
+    let frmArray = <FormArray> this.signupForm.get('hobbies')
+    frmArray.push(new FormControl(null))
+    console.log('Hobby:',this.signupForm )
+  }
+
+  getControls(){
+   return (<FormArray> this.signupForm.get('hobbies')).controls
   }
 
 }

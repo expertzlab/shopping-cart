@@ -82,6 +82,19 @@
         <option value="teacher">Who is your favorite Teacher?</option>
       </select>
     </div>
+    <div class="form-group row" formGroupName="multifactor">
+      <label>Multifactor:</label>
+      <input type="text" formControlName="otp" class="form-control">  
+    </div> 
+    <div class="form-group row">
+        <label class="form-label col-md-3 col-sm-3">Your Hobbies:</label>
+        <button class="btn btn-primary col-md-3 col-sm-3" (click)="onAddHobby()">Add Hobby</button>
+      </div>
+    <div class="form-group row" formArrayName="hobbies">
+      <div *ngFor="let ctr of getControls(); let i = index;">
+        <input type="text" [formControlName]="i">
+      </div>
+    </div> 
     <div class="row">
       <input class="btn btn-outline-primary col-md-3 col-sm-3" type="submit" value="submit" [disabled]="! signupForm.valid">
     </div>
