@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { of, pipe } from 'rxjs';
+import { filter, map } from 'rxjs/operators'​;
 
 @Component({
   selector: 'app-root',
@@ -8,6 +11,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 })
 export class AppComponent implements OnInit {
   title = 'shopping-cart';
+  link= ''
   
   signupForm!: FormGroup
 
@@ -17,8 +21,11 @@ export class AppComponent implements OnInit {
   password:string = ''
   secret:string = ''
   loginOptions = ['email', 'phone']
+  fb: FormBuilder
 
-  constructor() {
+  constructor(private _fb: FormBuilder, private route: ActivatedRoute) {
+    this.fb = _fb
+
     this.validationMessages.email = {
       required: 'Email Required',
       minlength: 'Email minimum length required',
@@ -36,7 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
-
+    /*
     let passWordCtrl = null
     if(true){
       passWordCtrl =  new FormControl(null, this.passwordValidation )
@@ -63,18 +70,49 @@ export class AppComponent implements OnInit {
       'hobbies': new FormArray([])
     })
 
+    */
+    this.route.params.subscribe( (p) => {
+      this.link = p.id
+      console.log("Received Event")
+    })
+     this.signupForm = this.fb.group({
+       'email':[],  'phone':[], 'password':[], 'age':[], 'loginOp':[], 'secret':['pet'],
+       'multifactor': this.fb.group({
+         'otp':[]
+       }),
+       'hobbies': this.fb.array([])
+     })
+
     this.onloaddata()
     this.signupForm.valueChanges.subscribe((data) => {
       console.log('data: ', data)
       console.log('p: ',JSON.stringify(this.signupForm.controls.phone.errors))
     })
     
+    let st = of(1,2,3,4,5)
+     let _pipe = pipe(
+      //filter((n : any) =>  n % 2 == 0),
+      //map((n: any) => n * n )
+    )
+    
+    //let obable = _pipe(st)
+    st.subscribe( (val: any) => {
+      console.log('subscriber received:',val)
+    })
+
   }
 
   onClickSubmit(){
     console.log("submitted")
     console.log("received"+ JSON.stringify(this.signupForm.value)  )
     this.loopTroughControls(this.signupForm)
+
+    var emailInput = document.getElementById('email') ;
+    console.log('Input:', emailInput)
+
+    emailInput = document.getElementById('email')
+    console.log(emailInput)
+
   }
 
   passwordValidation(formControl: any){
