@@ -106,4 +106,8 @@ You clicked on: {{ link}}
 </div>
 </div>
 
+<app-product bind-money="initialMoney" (produce)="timeOut = $event"></app-product>
 
+<p *ngIf="timeOut > 1">  time out in {{timeOut}} seconds </p>
+
+Counter = {{count}}

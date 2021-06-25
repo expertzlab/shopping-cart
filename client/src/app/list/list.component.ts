@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -17,4 +17,28 @@ export class ListComponent implements OnInit, OnDestroy {
     console.log('destoy List component')
   }
 
+  ngOnChanges(sc: SimpleChanges){
+    console.log('on changes')
+    for(const c in sc){
+      console.log('onchanges: ',sc[c])
+    }
+  }
+  ngAfterContentInit(){
+    console.log("Content Initiated")
+  }
+  ngAfterContentChecked(){
+    console.log("Content Checked")
+  }
+
+  ngAfterViewInit(){
+    console.log("View Initiated")
+  }
+
+  ngAfterViewChecked(){
+    console.log("View Checked")
+  }
+
+  ngDoCheck(){
+    console.log("Do Check")
+  }
 }

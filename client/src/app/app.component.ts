@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { of, pipe } from 'rxjs';
-import { filter, map } from 'rxjs/operators'​;
+import { fromEvent, interval, of, pipe } from 'rxjs';
+import { filter, map, timeout } from 'rxjs/operators'​;
 
 @Component({
   selector: 'app-root',
@@ -12,11 +12,11 @@ import { filter, map } from 'rxjs/operators'​;
 export class AppComponent implements OnInit {
   title = 'shopping-cart';
   link= ''
-  
+  initialMoney = 5500
   signupForm!: FormGroup
-
+  timeOut = 0
   validationMessages: any = {}
-
+  count = 0
   email:string = ''
   password:string = ''
   secret:string = ''
@@ -43,34 +43,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
-    /*
-    let passWordCtrl = null
-    if(true){
-      passWordCtrl =  new FormControl(null, this.passwordValidation )
-    } else {
-      passWordCtrl = new FormControl(null, Validators.required )
-    }
-
-    let ageCtrl = new FormControl(null, [Validators.required, Validators.min(18), Validators.max(65)])
-    let loginOp = new FormControl(null)
-    let phoneCtrl = new FormControl(null)
     
-    let multifactor = new FormGroup({
-      'otp': new FormControl(null, Validators.required)
-    })
-
-    this.signupForm = new FormGroup({
-      'email': new FormControl(null),
-      'phone': new FormControl(null),
-      password : passWordCtrl,
-      age: ageCtrl,
-      'loginOp': loginOp,
-      'secret': new FormControl('pet'),
-      'multifactor': multifactor,
-      'hobbies': new FormArray([])
-    })
-
-    */
     this.route.params.subscribe( (p) => {
       this.link = p.id
       console.log("Received Event")
@@ -100,19 +73,46 @@ export class AppComponent implements OnInit {
       console.log('subscriber received:',val)
     })
 
+    interval(1000).subscribe( (c) => {
+      console.log('product r:',c)
+      this.count = c
+      if(this.count > this.timeOut){
+        this.count = 0
+      }
+    } )
+
   }
 
   onClickSubmit(){
     console.log("submitted")
     console.log("received"+ JSON.stringify(this.signupForm.value)  )
     this.loopTroughControls(this.signupForm)
+  }
 
-    var emailInput = document.getElementById('email') ;
+  ngDoCheck(){
+
+    const ESC_KEY = 27
+    var emailInput = document.getElementById('email') as HTMLInputElement
     console.log('Input:', emailInput)
+    /*
+    fromEvent(emailInput,'keydown').subscribe((e: Event) => {
 
-    emailInput = document.getElementById('email')
-    console.log(emailInput)
+        if((<KeyboardEvent>e).keyCode == ESC_KEY){
+          emailInput.value = ''
+          console.log("ESC pressed")
+        }
+        console.log('email event')
+    })
+    */
+    
+  }
 
+  @HostListener('window:keydown',['$event']) sw(e: KeyboardEvent){
+    console.log('key down pressed', e)
+    if((<HTMLInputElement>e.target).id == 'email'){
+      if(e.keyCode == 27)
+      (<HTMLInputElement>e.target).value = ''
+    }
   }
 
   passwordValidation(formControl: any){
@@ -172,6 +172,10 @@ export class AppComponent implements OnInit {
 
   getControls(){
    return (<FormArray> this.signupForm.get('hobbies')).controls
+  }
+
+  onProduceData(e: string){
+    alert('event Received:'+ e )
   }
 
 }
