@@ -5,7 +5,7 @@ import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.sass']
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit {
 
   constructor() { }
 
@@ -13,6 +13,7 @@ export class ListComponent implements OnInit, OnDestroy {
     console.log("init List component")
   }
 
+  /*
   ngOnDestroy(){
     console.log('destoy List component')
   }
@@ -41,4 +42,5 @@ export class ListComponent implements OnInit, OnDestroy {
   ngDoCheck(){
     console.log("Do Check")
   }
+  */
 }

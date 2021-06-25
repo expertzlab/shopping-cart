@@ -3,42 +3,53 @@ import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ObserveOnOperator } from 'rxjs/internal/operators/observeOn';
 import { EventEmitter } from '@angular/core'
+import { ProductService } from '../product.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.sass']
+  styleUrls: ['./product.component.sass'],
+  inputs:['money'],
+  outputs:['produce']
 })
 export class ProductComponent implements OnInit, OnDestroy {
 
-  @Input() money!: number
-  @Output() produce: EventEmitter<any> = new EventEmitter()
+  money!: number
+  produce: EventEmitter<any> = new EventEmitter()
   count: number = 0
   subscr!: Subscription 
   obable: any
-  constructor() { }
+
+  constructor(private prodServ: ProductService) { }
 
   ngOnInit(): void {
 
+    this.prodServ.getProducts().subscribe(data => {
+      console.log('1 Received from server:', data)
+    },
+    error => { 
+      console.log('error:', error)
+    },
+    () => {
+      console.log('success!')
+    }
+    )
+    console.log('Going to 2 Ajax')
+    //2
+    this.prodServ.getProducts().subscribe(data => {
+      console.log('2 Received from server:', data)
+    })
+
+    console.log('Going to 3 Ajax')
+    //3
+    this.prodServ.getProducts().subscribe(data => {
+      console.log('3 Received from server:', data)
+    })
+
     this.produce.emit(10)
-  /*
-  this.subscr = interval(1000).subscribe( (c) => {
-      console.log('product r:',c)
-      this.count = c
-    } )
-  }
-  */
   
     this.obable = Observable.create((obsr: any) => {
-      /*
-      let cnt = 0
-      setInterval(() => {
-          obsr.next(cnt ++) //Emitting
-        if(cnt > 10){
-          obsr.error( new Error('counter is greathan 10'))
-        }
-      }, 1000)
-      */
+    
       for(var i=0; i< 5; i++){
         obsr.next(i)
       }
@@ -56,6 +67,8 @@ export class ProductComponent implements OnInit, OnDestroy {
         console.log("COMPLETE")
       }
     ) 
+
+
 
   }
 

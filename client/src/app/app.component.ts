@@ -69,17 +69,18 @@ export class AppComponent implements OnInit {
     )
     
     //let obable = _pipe(st)
-    st.subscribe( (val: any) => {
-      console.log('subscriber received:',val)
-    })
-
-    interval(1000).subscribe( (c) => {
+    //st.subscribe( (val: any) => {
+    //  console.log('subscriber received:',val)
+    //})
+    
+    /*interval(1000).subscribe( (c) => {
       console.log('product r:',c)
       this.count = c
       if(this.count > this.timeOut){
         this.count = 0
       }
     } )
+    */
 
   }
 
@@ -90,10 +91,11 @@ export class AppComponent implements OnInit {
   }
 
   ngDoCheck(){
-
+    /*
     const ESC_KEY = 27
     var emailInput = document.getElementById('email') as HTMLInputElement
     console.log('Input:', emailInput)
+    */
     /*
     fromEvent(emailInput,'keydown').subscribe((e: Event) => {
 
@@ -106,7 +108,7 @@ export class AppComponent implements OnInit {
     */
     
   }
-
+/*
   @HostListener('window:keydown',['$event']) sw(e: KeyboardEvent){
     console.log('key down pressed', e)
     if((<HTMLInputElement>e.target).id == 'email'){
@@ -114,6 +116,7 @@ export class AppComponent implements OnInit {
       (<HTMLInputElement>e.target).value = ''
     }
   }
+  */
 
   passwordValidation(formControl: any){
 
