@@ -1,0 +1,19 @@
+<p>File Upload Form</p>
+
+<form #uplform="ngForm" (submit)="handleSubmit(uplform)">
+    <div class="row">
+        <div class="form-group">
+            <label class="form-label" for="file">Select a File to Upload</label>
+            <input class="form-control" type="file" id="file" (change)="handleInputFile($event.target)"> 
+            <button class="btn btn-primary">Upload</button>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="progressFlag" class="progress">
+        <div class="progress-bar" role="progressbar" [style]="progressLength" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    
+        <div *ngIf="sucessString.trim().length != 0" class="alert alert-success" role="alert">
+        {{sucessString}}
+        </div>  
+</form>

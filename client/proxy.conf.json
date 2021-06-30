@@ -3,6 +3,10 @@
       "target": "http://localhost:3000",
       "secure": false  
     },
+    "/api/fileupload": {
+      "target": "http://localhost:3000",
+      "secure": false  
+    },
     "/api/users": {
       "target": "http://localhost:3000/",
       "secure": false,

@@ -24,26 +24,42 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.prodServ.getProducts().subscribe(data => {
-      console.log('1 Received from server:', data)
-    },
-    error => { 
-      console.log('error:', error)
-    },
-    () => {
-      console.log('success!')
-    }
-    )
-    console.log('Going to 2 Ajax')
-    //2
-    this.prodServ.getProducts().subscribe(data => {
-      console.log('2 Received from server:', data)
+    let promise = new Promise((resolve, reject) => {
+        console.log('1st Ajax call')
+        this.prodServ.getProducts().toPromise().then( (results) => {
+          console.log('1 Received from server:', results)
+          resolve({})
+        }).catch(e =>{
+          console.log('error: ', e)
+          reject()
+        })
+    })
+    
+    let promise1 = new Promise(()=>{});
+    promise.then(r1 => {
+      console.log('2nd Ajax call')
+      this.prodServ.getProducts().toPromise().then( (results) => {
+        console.log('2 Received from server:', results)
+        promise1 = new Promise((resolve, reject)=>{
+          console.log('3rd Ajax call')
+          this.prodServ.getProducts().toPromise().then((r2) => {
+            console.log('3 Received from server:', r2)
+            resolve({})
+          }).catch((e)=> {
+            reject()
+          })
+          
+
+        })
+        
+      }).catch(e =>{})
+
+    }).catch( e => {
+      console.log("1st ajax call failed")
     })
 
-    console.log('Going to 3 Ajax')
-    //3
-    this.prodServ.getProducts().subscribe(data => {
-      console.log('3 Received from server:', data)
+    promise1.then((result: any) => {
+      console.log("result of third ajax call", result)
     })
 
     this.produce.emit(10)

@@ -7,14 +7,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { ListComponent } from './list/list.component';
 import { ProductComponent } from './product/product.component';
-import {HttpClientModule } from '@angular/common/http'
+import {HttpClientModule } from '@angular/common/http';
+import { FileuploadComponent } from './fileupload/fileupload.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ListComponent,
-    ProductComponent
+    ProductComponent,
+    FileuploadComponent
   ],
   imports: [
     BrowserModule,
