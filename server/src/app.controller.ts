@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
 import { User } from './user';
 
@@ -6,7 +7,7 @@ import { User } from './user';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
+  @Get('api')
   getHello(): string {
     return this.appService.getHello();
   }
@@ -14,5 +15,19 @@ export class AppController {
   @Post('api/users')
   products(@Body() user: User){
     console.log('Received:' + JSON.stringify(user) ) 
+  }
+
+  @Post('api/fileupload')
+  @UseInterceptors(
+    FileInterceptor('file')
+  )
+  fileUplod(@UploadedFile() file){
+
+    const response = {
+      'filename': file.filename, 'originalName': file.originalName
+    }
+    console.log('file received', response)
+    return response;
+
   }
 }
