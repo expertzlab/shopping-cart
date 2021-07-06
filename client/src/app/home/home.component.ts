@@ -23,4 +23,7 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  pageCount(){
+    return 15
+  }
 }

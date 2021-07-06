@@ -1,1 +1,21 @@
-<p>list works!</p>
+<p>Select Vaccine</p>
+
+<div class="row">
+    <div class="col-sm-4 col-md-4">
+        <h4>Select Vaccine</h4>
+        <ul>
+            <li [@list] (click)="selectItem(it)" *ngFor="let it of list1"> {{it}}</li>
+        </ul>
+    </div>
+    <div class="col-sm-1 col-md-1">
+        <br><br><br>
+        Move 
+       <button (click)="moveItem()">>></button>  
+    </div>
+    <div class="col-sm-4 col-md-4">
+        <h4>Selected Vaccines</h4>
+        <ul>
+            <li [@list] *ngFor="let it of list2"> {{it}}</li>
+        </ul>
+    </div>
+</div>

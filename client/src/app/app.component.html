@@ -1,3 +1,7 @@
+<mat-toolbar>
+  <span>My Application</span>
+</mat-toolbar>
+
 You clicked on-: {{ link}}
 <app-home></app-home>
 <router-outlet></router-outlet>
@@ -7,13 +11,13 @@ You clicked on-: {{ link}}
 <div class="container">
   <form [formGroup]="signupForm" (ngSubmit)="onClickSubmit()" class="row">
     
-    <div class="form-group row">
-      <label class="form-label col-sm-4 col-md-4" for="email">
+    <div class="row">
+      <mat-label class="form-label col-sm-4 col-md-4" for="email">
         Select Login options:
-      </label>
-      <div *ngFor="let optNames of loginOptions">
-        <input (click)="onclickOption(optNames)" type="radio" formControlName="loginOp" name="loginOp" [value]="optNames"> {{optNames}}
-      </div>
+      </mat-label>
+      <mat-radio-group>
+        <mat-radio-button style="display:block;" *ngFor="let optNames of loginOptions" (click)="onclickOption(optNames)" type="radio" name="loginOp" [value]="optNames"> {{optNames}} </mat-radio-button>
+      </mat-radio-group>
     </div>
 
     <div *ngIf="signupForm.controls.loginOp.value == 'email'" class="form-group row">
@@ -58,11 +62,11 @@ You clicked on-: {{ link}}
 
     </div>
 
-    <div class="form-group row">
-      <label class="form-label col-sm-4 col-md-4"  for="age">Age: </label>
-      <div class="col-sm-4 col-md-4">
-        <input class="form-control" formControlName="age" id="age" type="input">
-      </div>
+    <div class="row">
+      <mat-form-field>
+      <mat-label class="col-sm-4 col-md-4" for="age">Age: </mat-label>
+      <input matInput class="form-control" formControlName="age" id="age"> 
+      </mat-form-field>
       <div class="alert alert-danger" *ngIf="!signupForm.controls.age.valid && signupForm.controls.age.touched">
         Age should be between 18 and 65
       </div>
@@ -99,7 +103,7 @@ You clicked on-: {{ link}}
       </div>
     </div> 
     <div class="row">
-      <input class="btn btn-outline-primary col-md-3 col-sm-3" type="submit" value="submit" [disabled]="! signupForm.valid">
+      <button mat-stroked-button color="primary" class="col-md-3 col-sm-3" type="submit" value="submit" [disabled]="! signupForm.valid">Submit</button>
     </div>
     
   </form>

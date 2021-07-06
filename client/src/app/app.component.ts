@@ -156,7 +156,7 @@ export class AppComponent implements OnInit {
   }
 
   onloaddata(){
-
+/*
     this.signupForm.patchValue({
       'email': 's@s.com',
       'phone' : '2323232323',
@@ -165,6 +165,7 @@ export class AppComponent implements OnInit {
       'secret':'pet',
       'multifactor':{'otp':'2222'}
     })
+    */
   }
 
   onAddHobby(){
